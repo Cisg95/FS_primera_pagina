@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset = "UTF-8">
+	<title>Lista de Tareas Interactiva</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<style>
+		body{
+			background-color: {{ color_fondo | default('black') }};
+		}
+	</style>
+
+</head>
+
+	<body>
+		<h1>BIENVENIDOS A MI PRIMERA PAGINA WEB</h1>
+		<h3>Una página sencilla con gestión dinámica de tareas usando Flask, JavaScript y almacenamiento persistente en localStorage 📚</h3>
+		<button id="cambiar-color">Cambia de color el fondo de mi pagina 🌈</button>
+		<p>Estudiare para ser full stack combinando conocimientos de data analyst 🤓🚀</p>
+		<br>
+		<p>To-Do list</p>
+		{% if tareas %}
+			<ol>
+				{% for tarea in tareas %}
+					<li>{{tarea}} 
+						<form method= "POST" action="{{ url_for('eliminar_tarea') }}">
+							<input type="hidden" name= tarea_a_eliminar value="{{tarea|e}}"></input>
+							<button id="submit">Eliminar Tarea</button>
+						</form>
+						
+					</li>
+				{% endfor %}
+	<!--		<li>Aprender HTML y CSS</li>
+			<li>Javascript basico</li>
+			<li>Git y github</li>
+			<li>Python y Flask</li>
+			<li>SQL, dominado pa'</li>
+			<li>React</li>
+			<li>APIs y despliegues</li>-->
+			</ol>
+		{% else %}
+			<p>Aun no hay tarea. Agrega una bella! 😀</p>
+		{% endif %}
+		<form method="POST" action="/">
+			<input type='text' name= 'nueva_tarea' id="newTask" placeholder= 'Escribe una nueva tarea linda' >
+			<button id= 'submit'>Agregar la tarea</button>
+		</form>
+		
+		<p id='popupAnadirTarea'></p>
+		<br><br>
+		<p id = 'popupEliminarTarea'></p>
+		<br>
+		<p>Ademas quiero compartir la pagina de 
+		<a href="https://chatgpt.com/">mi mejor maestro CHATGPT</a>
+		<br>
+		
+		<img class='analisisUno' src="{{ url_for('static', filename='images/Grafico_monto_por_dia_semana.png') }}" alt="Grafico de montos por dia de semana" height=300 width=650>
+		<img class='analisisDos' src="{{ url_for('static', filename='images/Grafico_estado_monto.png') }}" alt="Grafico de torta respecto a los pct de montos por estado" height=300 width=650>
+		
+		<p>A continuacion unos graficos de analisis respecto a una data ficticia:</p>
+		
+		
+		<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+	</body>
+</html>
