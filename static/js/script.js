@@ -93,3 +93,33 @@ document.addEventListener("DOMContentLoaded", () => {
 	};
 })
  */
+function alerta_sonido(id) {
+	const sonido = document.getElementById(id)
+	if (sonido) {
+		sonido.currentTime = 0;
+		sonido.play()
+	}
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+	const alertas = document.querySelectorAll('.alert')
+	alertas.forEach(alerta => {
+		if (alerta.classList.contains('success')) {
+			alerta_sonido('success')
+		} else if (alerta.classList.contains('error')) {
+			alerta_sonido('error')
+		} else {alerta_sonido('warning')}
+	});
+})
+
+const sonidoPurring = document.getElementById('cat_purring');
+const imagePurring = document.querySelector('.gato_durmiendo');
+
+imagePurring.addEventListener('mouseenter', () => {
+	sonidoPurring.currentTime = 0;
+	sonidoPurring.play();
+})
+imagePurring.addEventListener('mouseleave', () => {
+	sonidoPurring.pause();
+	sonidoPurring.currentTime = 0;
+})

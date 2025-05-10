@@ -8,17 +8,30 @@
 		body{
 			background-color: {{ color_fondo | default('black') }};
 		}
+
 	</style>
 
 </head>
-
+<audio id= 'success' src="{{url_for('static',filename='sounds/success.mp3')}}"></audio>
+<audio id= 'error' src="{{ url_for('static', filename = 'sounds/error.wav')}}"></audio>
+<audio id= 'warning' src="{{url_for('static',filename='sounds/warning.wav')}}"></audio>
+<audio id='cat_purring' src="{{url_for('static',filename='sounds/cat_purring.mp3')}}"></audio>
 	<body>
 		<h1>BIENVENIDOS A MI PRIMERA PAGINA WEB</h1>
 		<h3>Una página sencilla con gestión dinámica de tareas usando Flask, JavaScript y almacenamiento persistente en localStorage 📚</h3>
 		<button id="cambiar-color">Cambia de color el fondo de mi pagina 🌈</button>
 		<p>Estudiare para ser full stack combinando conocimientos de data analyst 🤓🚀</p>
 		<br>
+		{% with mensajes = get_flashed_messages(with_categories=true) %}
+			{% if mensajes %}
+				{% for categoria, mensaje in mensajes %}
+				<div class="alert {{ categoria }}">{{ mensaje }}</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+
 		<p>To-Do list</p>
+		<img class= "gato_durmiendo" src="{{url_for('static',filename='images/gato_durmiendo.webp')}}" alt="gato durmiendo">
 		{% if tareas %}
 			<ol>
 				{% for tarea in tareas %}
@@ -39,11 +52,11 @@
 			<li>APIs y despliegues</li>-->
 			</ol>
 		{% else %}
-			<p>Aun no hay tarea. Agrega una bella! 😀</p>
+			<p class="agrega_tarea">Aun no hay tarea. Agrega una bella! 😀</p>
 		{% endif %}
 		<form method="POST" action="/">
-			<input type='text' name= 'nueva_tarea' id="newTask" placeholder= 'Escribe una nueva tarea linda' >
-			<button id= 'submit'>Agregar la tarea</button>
+			<input class="anadir" type='text' name= 'nueva_tarea' id="newTask" placeholder= 'Escribe una nueva tarea linda' >
+			<button class="anadir_boton" id= 'submit'>Agregar la tarea</button>
 		</form>
 		
 		<p id='popupAnadirTarea'></p>
